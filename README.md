@@ -1,4 +1,4 @@
-# weather-ui
+# testvuetify
 
 ## Project setup
 ```
