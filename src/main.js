@@ -3,6 +3,8 @@ import './plugins/vuetify'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import VueSocketio from 'vue-socket.io';
+Vue.use(VueSocketio, 'http://localhost:3000');
 
 Vue.config.productionTip = false
 

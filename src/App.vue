@@ -1,5 +1,5 @@
 <template>
-    <v-app dark>
+    <v-app>
     <router-view/>
     </v-app>
 </template>
@@ -12,5 +12,4 @@
 <style lang="stylus">
 .theme--dark.application
   background-color : black
-
 </style>

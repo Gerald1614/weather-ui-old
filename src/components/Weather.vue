@@ -1,50 +1,83 @@
 <template>
-  <v-parallax
-    src="https://www.nps.gov/ever/planyourvisit/images/5204457439_c8dd299265_o.jpg?maxwidth=1200&maxheight=1200&autorotate=false"
-    height="100%"
-  >
-  <v-container grid-list-md text-xs-center>
-    <v-layout>
-      <v-flex xs6>
-        <v-card color="black">
-          <v-card-title primary-title>
-            <div class="headline white--text">Température intérieure</div>
+  <div class="bgImage">
+    <div class="bgGradient">
+  <v-container fluid grid-list-md>
+    <v-layout class="pa-2 ma-2">
+      <v-flex xs4>
+        <v-card>
+          <v-card-title class="py-0 px-2 justify-center">
+            <div class="body-2 white--text">Température intérieure</div>
           </v-card-title>
-          <v-card-text class="px-0">
-            <ve-gauge :data="tempData" :settings="tempSettings"></ve-gauge>
+          <v-card-text class="pa-0">
+            <ve-gauge :data="tempData" :settings="tempSettings" height="300px"></ve-gauge>
+          </v-card-text>
+        </v-card>
+        <v-card>
+          <v-card-title class="py-0 px-2 justify-center">
+            <div class="body-2 white--text">Humidite</div>
+          </v-card-title>
+          <v-card-text class="pa-0">
+
+            <ve-gauge :data="humidityData" :settings="humiditySettings" height="300px"></ve-gauge>
           </v-card-text>
         </v-card>
       </v-flex>
-      <v-flex xs6>
-        <v-card color="black">
-          <v-card-title primary-title>
-            <div class="headline white--text">Pression Atmosph.</div>
+       <v-flex xs8>
+        <v-card>
+          <v-card-title class="py-0 px-2 justify-center">
+            <div class="body-2 white--text">Extérieur</div>
           </v-card-title>
-          <v-card-text class="px-0">
-            <ve-gauge :data="preData" :settings="preSettings"></ve-gauge>
+          <v-card-text class="pa-0"> 
+            <p>temp, prevision 24h</p>
+          </v-card-text>
+        </v-card>
+
+      <v-layout row wrap>
+     <v-flex xs5>
+        <v-card>
+          <v-card-title class="py-0 px-2 justify-center">
+            <div class="body-2 white--text">Pression Atmosphérique</div>
+          </v-card-title>
+          <v-card-text class="pa-0">
+            <ve-gauge :data="preData" :settings="preSettings" height="300px"></ve-gauge>
           </v-card-text>
         </v-card>
       </v-flex>
+      <v-flex xs7>
+        <v-card>
+          <v-card-title class="py-0 px-2 justify-center">
+            <div class="body-2 white--text">Evolution Pression</div>
+          </v-card-title>
+          <v-card-text class="pa-0">
+            <ve-histogram :data="chartData" :settings="chartSettings" height="300px" ></ve-histogram>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </v-layout>
+    </v-flex>
     </v-layout>
     <v-layout row wrap>
-      <v-flex xs12>
-        <v-card  color="black">
-          <v-card-title primary-title>
-            <div class="headline white--text">Humidité</div>
+     <v-flex xs12>
+        <v-card>
+          <v-card-title class="py-0 px-2 justify-center">
+            <div class="body-2 white--text">autre display</div>
           </v-card-title>
-          <v-card-text class="px-0"> 
-            <ve-gauge :data="humidityData" :settings="humiditySettings"></ve-gauge>
+          <v-card-text class="pa-0">
+            
           </v-card-text>
         </v-card>
       </v-flex>
+      
     </v-layout>
   </v-container>
-  </v-parallax>
+   </div>
+  </div>
 </template>
 <script>
 import VeGauge from 'v-charts/lib/gauge.common'
+import VeHistogram from 'v-charts/lib/histogram.common'
 export default {
-  components: { VeGauge },
+  components: { VeGauge, VeHistogram },
   data () {
     this.tempSettings = {
         dimension: 'type',
@@ -78,13 +111,13 @@ export default {
         },
         seriesMap: {
           'pressure': {
-            min: 964,
-            max: 1048,
+            min: 980,
+            max: 1030,
             endAngle:45,
-            splitNumber:6,
+            splitNumber:5,
             axisLine: {
               lineStyle: {
-                color: [[0.1667, '#769ECB'],[0.333, '#3F7BB6'],[0.5, '#03C03C'],[0.666, '#C3C343'],[0.833, '#C29536'],[1, '#C23B23']]
+                color: [[0.2, '#769ECB'],[0.4, '#3F7BB6'],[0.6, '#03C03C'],[0.8, '#C29536'],[1, '#C23B23']]
               },
               
             },
@@ -109,11 +142,11 @@ export default {
         },
         seriesMap: {
           'humidity': {
-            min: 0,
+            min: 20,
             max: 100,
             startAngle:135,
             endAngle:45,
-            splitNumber:5,
+            splitNumber:4,
             title: {
               textStyle: {
                 fontWeight: 'bolder',
@@ -126,6 +159,9 @@ export default {
             },
           }
         }
+      },
+      this.chartSettings = {
+        metrics: ['pressure']
       }
       return {
         tempData: {
@@ -143,21 +179,41 @@ export default {
         humidityData: {
           columns: ['type', 'value'],
           rows: [
-            { type: 'humidity', value: 20 }
+            { type: 'humidity', value: 50 }
           ]
         },
         SensorData: "",
+        PressureMinMax:[],
+        chartData: {
+          columns: ['pressure', 'timing'],
+          rows: [
+            { pressure: 0, timing: 'h' },
+            { pressure: 0, timing: 'm-30' },
+            { pressure: 0, timing: 'h-1' },
+            { pressure: 0, timing: 'm-90' },
+            { pressure: 0, timing: 'h-2' }
+          ]
+        }
       }
 
   },
   mounted () {
     this.$options.sockets.sensorData = (data) => {
+      let that = this
       console.log(data)
-      this.SensorData = JSON.parse(data)
-      console.log(this.SensorData.temperature_C)
-      this.tempData.rows[0].value = this.SensorData.temperature_C
-      this.preData.rows[0].value = this.SensorData.pressure_hPa
-      this.humidityData.rows[0].value = this.SensorData.humidity
+      this.SensorData = data
+      console.log(this.SensorData)
+      this.tempData.rows[0].value = this.SensorData[0].temperature_C
+      this.preData.rows[0].value = this.SensorData[0].pressure_hPa
+      this.humidityData.rows[0].value = this.SensorData[0].humidity
+      this.SensorData.forEach(function (pressure, index) {
+        that.chartData.rows[index].pressure = pressure.pressure_hPa
+        that.PressureMinMax.push(pressure.pressure_hPa)
+      })
+  console.log(that.PressureMinMax)
+  that.PressureMinMax.sort()
+  this.chartSettings.min = [that.PressureMinMax[0]-1]
+  this.chartSettings.max = [that.PressureMinMax[that.PressureMinMax.lenght-1]+1]
     }
   },
   methods: {
@@ -166,10 +222,20 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
-ve-gauge {
-    width: 100%;
-    max-height: 300px
-  }
-  .theme--light.v-card 
+.bgImage
+  background: url('../assets/sunnysky.jpg')
+  background-size: auto 100%
+  background-repeat : no-repeat
+
+.theme--light.v-card 
     opacity : 0.6
+    background-color: black
+
+.bgGradient {
+  background: linear-gradient(
+    to top,
+    black, 
+    transparent
+  );
+}
 </style>

@@ -9,7 +9,6 @@ import {
   VCard,
   VIcon,
   VGrid,
-  VParallax,
   VToolbar,
   transitions
 } from 'vuetify'
@@ -25,7 +24,6 @@ Vue.use(Vuetify, {
     VCard,
     VIcon,
     VGrid,
-    VParallax,
     VToolbar,
     transitions
   },
