@@ -3,7 +3,7 @@
     <div class="bgGradient">
   <v-container fluid grid-list-md>
     <v-layout class="pa-2 ma-2">
-      <v-flex xs4>
+      <v-flex xs3>
         <v-card>
           <v-card-title class="py-0 px-2 justify-center">
             <div class="body-2 white--text">Température intérieure</div>
@@ -22,7 +22,7 @@
           </v-card-text>
         </v-card>
       </v-flex>
-       <v-flex xs8>
+       <v-flex xs9>
         <v-card>
           <v-card-title class="py-0 px-2 justify-center">
             <div class="body-2 white--text">Extérieur</div>
@@ -46,10 +46,14 @@
       <v-flex xs7>
         <v-card>
           <v-card-title class="py-0 px-2 justify-center">
-            <div class="body-2 white--text">Evolution Pression</div>
+            <div class=" text-xs-center body-2 white--text">
+              <span>Evolution Pression</span>
+              <h3 v-if='alertPress' class="white--text">Prevision: {{ alertPress }}</h3>
+            </div>
           </v-card-title>
           <v-card-text class="pa-0">
             <ve-histogram :data="chartData" :settings="chartSettings" height="300px" ></ve-histogram>
+ 
           </v-card-text>
         </v-card>
       </v-flex>
@@ -161,7 +165,11 @@ export default {
         }
       },
       this.chartSettings = {
-        metrics: ['pressure']
+        metrics: ['pressure'],
+        dimension:['timing'],
+        min:[960],
+        max:[1050],
+        label: { normal: { show: true, position: "top" } }
       }
       return {
         tempData: {
@@ -182,38 +190,35 @@ export default {
             { type: 'humidity', value: 50 }
           ]
         },
-        SensorData: "",
-        PressureMinMax:[],
+        capteurData: '',
+        alertPress:'',
         chartData: {
           columns: ['pressure', 'timing'],
           rows: [
-            { pressure: 0, timing: 'h' },
-            { pressure: 0, timing: 'm-30' },
-            { pressure: 0, timing: 'h-1' },
-            { pressure: 0, timing: 'm-90' },
-            { pressure: 0, timing: 'h-2' }
+            { pressure: 1015, timing: 'h-2' },
+            { pressure: 1015, timing: 'm-90' },
+            { pressure: 1015, timing: 'h-1' },
+            { pressure: 1015, timing: 'm-30' },
+            { pressure: 1015, timing: 'h' }
           ]
         }
       }
 
   },
   mounted () {
+    let that = this
     this.$options.sockets.sensorData = (data) => {
-      let that = this
       console.log(data)
-      this.SensorData = data
-      console.log(this.SensorData)
-      this.tempData.rows[0].value = this.SensorData[0].temperature_C
-      this.preData.rows[0].value = this.SensorData[0].pressure_hPa
-      this.humidityData.rows[0].value = this.SensorData[0].humidity
-      this.SensorData.forEach(function (pressure, index) {
+      this.capteurData = JSON.parse(data)
+      this.tempData.rows[0].value = this.capteurData.data[0].temperature_C
+      this.preData.rows[0].value = this.capteurData.data[0].pressure_hPa
+      this.humidityData.rows[0].value = this.capteurData.data[0].humidity
+      this.chartSettings.min = [Number(this.capteurData.PressureMin.pressure)-0.2]
+      this.chartSettings.max = [Number(this.capteurData.PressureMax.pressure)+0.2]
+      this.alertPress = this.capteurData.alertPress
+      this.capteurData.data.reverse().forEach( function(pressure, index) {
         that.chartData.rows[index].pressure = pressure.pressure_hPa
-        that.PressureMinMax.push(pressure.pressure_hPa)
       })
-  console.log(that.PressureMinMax)
-  that.PressureMinMax.sort()
-  this.chartSettings.min = [that.PressureMinMax[0]-1]
-  this.chartSettings.max = [that.PressureMinMax[that.PressureMinMax.lenght-1]+1]
     }
   },
   methods: {
@@ -224,7 +229,8 @@ export default {
 <style lang="stylus" scoped>
 .bgImage
   background: url('../assets/sunnysky.jpg')
-  background-size: auto 100%
+  height: 100%
+  background-size:  cover
   background-repeat : no-repeat
 
 .theme--light.v-card 
@@ -232,6 +238,7 @@ export default {
     background-color: black
 
 .bgGradient {
+  height: 100%
   background: linear-gradient(
     to top,
     black, 

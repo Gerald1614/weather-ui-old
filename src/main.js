@@ -4,7 +4,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import VueSocketio from 'vue-socket.io';
-Vue.use(VueSocketio, 'http://localhost:3000');
+Vue.use(VueSocketio, 'http://192.168.2.14:3000');
 
 Vue.config.productionTip = false
 
