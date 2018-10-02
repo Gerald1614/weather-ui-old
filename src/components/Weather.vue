@@ -35,13 +35,138 @@
             </v-card>
             </v-flex>
             <v-flex xs6 class="pt-1">
-                <v-card>
-                  <v-card-title class="pa-1 justify-center">
-                    <div class="title white--text">Pression Atmosphérique</div>
-                  </v-card-title>
-                  <v-card-text class="pa-0">
-                    <ve-gauge :data="preData" :settings="preSettings" height="260px"></ve-gauge>
-                  </v-card-text>
+                <v-card class="pa-2">
+                  <div style="height: 272px">
+                    <div class="barometer">
+                      <span class="glass">
+                          <strong class="marks" style="bottom: 10%">Tempête</strong>
+                          <strong class="marks" style="bottom: 40%">Pluie</strong>
+                          <strong class="marks" style="bottom: 60%">Variable</strong>
+                          <strong class="marks" style="bottom: 80%">Beau Temps</strong>
+                          <strong class="marks" style="bottom: 90%">Très sec</strong>
+                          <div class="amount" v-bind:style="{height: pressurePercent}"></div>
+                      </span>
+                      <div class="bulb">
+                          <span class="red-circle"></span>
+                          <span class="filler">
+                              <span></span>
+                          </span>
+                      </div>
+                    </div>
+                    <div class='ruler'>
+                    <div class='cm'>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    </div>
+                    <div class='cm'>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    </div>
+                    <div class='cm'>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    </div>
+                    <div class='cm'>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    </div>
+                    <div class='cm'>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    </div>
+                    <div class='cm'>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    </div>
+                    <div class='cm'>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    </div>
+                    <div class='cm'>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    </div>
+                    <div class='cm'>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    </div>
+                    <div class='cm'>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    <div class='mm'></div>
+                    </div>
+                    <div class='cm'></div>
+                    </div>
+                  </div>
                 </v-card>
               </v-flex>
           </v-layout>
@@ -60,24 +185,7 @@
             </v-flex>
         </v-flex> 
         <v-flex xs6 class="pt-1">
-          <div>
-            <div class="barometer">
-              <strong>Our Goal</strong>
-              <strong class="goal">$9,001</strong>
-              <span class="glass">
-                  <strong class="total" style="bottom: 60%">$6,500</strong>
-                  <strong class="total" style="bottom: 80%">$7,500</strong>
 
-                  <span class="amount" style="height: 60%"></span>
-              </span>
-              <div class="bulb">
-                  <span class="red-circle"></span>
-                  <span class="filler">
-                      <span></span>
-                  </span>
-              </div>
-            </div>
-          </div>
         </v-flex>
     </v-layout>
 
@@ -125,45 +233,6 @@ export default {
         },
 
       },
-      this.preSettings = {
-        dimension: 'type',
-        temp: 'value',
-        dataName: {
-          'pressure' : 'hPa'
-        },
-        seriesMap: {
-          'pressure': {
-            min: 980,
-            max: 1030,
-            endAngle:45,
-            splitNumber:5,
-            axisLine: {
-              lineStyle: {
-                color: [[0.2, '#769ECB'],[0.4, '#3F7BB6'],[0.6, '#03C03C'],[0.8, '#C29536'],[1, '#C23B23']]
-              },
-              
-            },
-            title: {
-              textStyle: {
-                fontWeight: 'bolder',
-                fontSize: 16,
-                fontStyle: 'italic',
-                color: '#fff',
-                shadowColor: '#fff',
-                shadowBlur: 10
-              }
-            },
-            detail: {
-              backgroundColor: 'black',
-              shadowColor: 'orange',
-              offsetCenter: ['50%', '30%'],
-              textStyle: {
-                color: 'orange'
-              }
-            }
-          }
-        },
-      },
       this.humiditySettings = {
         dimension: 'type',
         humidity: 'value',
@@ -206,16 +275,11 @@ export default {
         label: { normal: { show: true, position: "top" } }
       }
       return {
+        pressurePercent: '60%',
         tempData: {
           columns: ['type', 'value'],
           rows: [
             { type: 'temp', value: 20 }
-          ]
-        },
-        preData: {
-          columns: ['type', 'value'],
-          rows: [
-            { type: 'pressure', value: 1000 }
           ]
         },
         humidityData: {
@@ -240,7 +304,6 @@ export default {
       console.log(data)
       this.capteurData = JSON.parse(data)
       this.tempData.rows[0].value = this.capteurData.data[0].temperature_C
-      this.preData.rows[0].value = this.capteurData.data[0].pressure_hPa
       this.humidityData.rows[0].value = this.capteurData.data[0].humidity
       this.chartSettings.min = [Number(this.capteurData.PressureMin.pressure)-0.2]
       this.chartSettings.max = [Number(this.capteurData.PressureMax.pressure)+0.2]
@@ -256,11 +319,11 @@ export default {
         })
       }
       that.chartData.rows[that.chartData.rows.length-1].timing='H'
+      that.pressurePercent = ((Number(that.chartData.rows[that.chartData.rows.length-1].pressure)-950)/(1050-950))*100 + '%'
     }
   },
  computed: {
    getWeatherImage: function() {
-
      let imgurl =  'https://www.theweather.net/wimages/foto6befdfa26653b3c86f01b91164e670e5.png' + '?' + Math.random()
      return imgurl
    }
@@ -292,37 +355,33 @@ export default {
   );
 }
 
-
-
 .barometer {
-  margin-left: 30px;
-  width: 100px;
+  margin-left: 50px;
+  width: 250px;
   .glass {
     background: #e5e5e5;
     border-radius: 100px 100px 0 0;
     display: block;
-    height: 300px;
+    height: 230px;
     margin: 0 35px 10px;
     padding: 5px;
     position: relative;
-    width: 30px;
+    width: 20px;
   }
   .amount {
     background: #f34e54;
     border-radius: 100px;
     display: block;
-    width: 20px;
+    width: 10px;
     position: absolute;
      bottom: 5px;
   }
-  strong { display: block; text-align: center; }
-  .goal {
-    font-size: 30px;
-  }
-  .total {
-    font-size: 16px;
+  .marks {
+    font-size: 12px;
     position: absolute;
-    right: 35px;
+    right: 25px;
+    width: 80px;
+    color:white;
   }
 }
 
@@ -330,31 +389,156 @@ export default {
   background: #e5e5e5;
   border-radius: 100px;
   display: block;
-  height: 50px;
+  height: 40px;
   margin: 0 35px 10px;
   padding: 5px;
   position: relative;
     top: -20px;
     right: 10px;
-  width: 50px;
+  width: 40px;
   .red-circle {
     background: #f34e54;
     border-radius: 100px;
     display: block;
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
   }
   .filler {
     background: #f34e54;
     border-radius: 100px 100px 0 0;
     display: block;
-    height: 30px;
-    width: 20px;
+    height: 40px;
+    width: 10px;
     position: relative;
       top: -65px;
       right: -10px;
     z-index: 30;
   }
+}
+
+.ruler {
+ position: relative;
+ top: -290px;
+ left:-40px;
+ width: 10%;
+ margin: 4px auto;
+ height: 220px;
+ color: white;
+}
+.ruler .cm,
+.ruler .mm {
+ position: absolute;
+ border-top: 1px solid #555;
+ height: 10%;
+ width: 15px;
+}
+.ruler .cm:after {
+ position: absolute;
+ left: 25px;
+  top:-5px;
+ font: 11px/1 sans-serif;
+}
+.ruler .mm {
+ width: 5px;
+}
+.ruler .mm:nth-of-type(5) {
+ width: 10px;
+}
+.ruler .cm:nth-of-type(1) {
+ top: 0%;
+}
+.ruler .cm:nth-of-type(1):after {
+ content: "1050";
+}
+.ruler .cm:nth-of-type(2) {
+ top: 10%;
+}
+.ruler .cm:nth-of-type(2):after {
+ content: "1040";
+}
+.ruler .cm:nth-of-type(3) {
+ top: 20%;
+}
+.ruler .cm:nth-of-type(3):after {
+ content: "1030";
+}
+.ruler .cm:nth-of-type(4) {
+ top: 30%;
+}
+.ruler .cm:nth-of-type(4):after {
+ content: "1020";
+}
+.ruler .cm:nth-of-type(5) {
+ top: 40%;
+}
+.ruler .cm:nth-of-type(5):after {
+ content: "1010";
+}
+.ruler .cm:nth-of-type(6) {
+ top: 50%;
+}
+.ruler .cm:nth-of-type(6):after {
+ content: "1000";
+}
+.ruler .cm:nth-of-type(7) {
+ top: 60%;
+}
+.ruler .cm:nth-of-type(7):after {
+ content: "990";
+}
+.ruler .cm:nth-of-type(8) {
+ top: 70%;
+}
+.ruler .cm:nth-of-type(8):after {
+ content: "980";
+}
+.ruler .cm:nth-of-type(9) {
+ top: 80%;
+}
+.ruler .cm:nth-of-type(9):after {
+ content: "970";
+}
+.ruler .cm:nth-of-type(10) {
+ top: 90%;
+}
+.ruler .cm:nth-of-type(10):after {
+ content: "960";
+}
+.ruler .cm:nth-of-type(11) {
+ top: 100%;
+}
+.ruler .cm:nth-of-type(11):after {
+ content: "950";
+}
+.ruler .mm:nth-of-type(1) {
+ top: 10%;
+}
+.ruler .mm:nth-of-type(2) {
+ top: 20%;
+}
+.ruler .mm:nth-of-type(3) {
+ top: 30%;
+}
+.ruler .mm:nth-of-type(4) {
+ top: 40%;
+}
+.ruler .mm:nth-of-type(5) {
+ top: 50%;
+}
+.ruler .mm:nth-of-type(6) {
+ top: 60%;
+}
+.ruler .mm:nth-of-type(7) {
+ top: 70%;
+}
+.ruler .mm:nth-of-type(8) {
+ top: 80%;
+}
+.ruler .mm:nth-of-type(9) {
+ top: 90%;
+}
+.ruler .mm:nth-of-type(10) {
+ top: 100%;
 }
 
 </style>
