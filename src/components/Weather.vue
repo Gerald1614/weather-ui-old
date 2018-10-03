@@ -1,6 +1,5 @@
 <template>
   <div class="bgImage">
-    <div class="bgGradient">
   <v-container fluid grid-list-md class="pa-0">
       <v-layout row wrap class="px-1">
       <v-flex xs3 class="pt-1">
@@ -36,6 +35,7 @@
             </v-flex>
             <v-flex xs6 class="pt-1">
                 <v-card class="pa-2">
+                  <div class="subheading pression">Pression Atmospherique : {{ pression }} hPa</div>
                   <div style="height: 272px">
                     <div class="barometer">
                       <span class="glass">
@@ -165,7 +165,7 @@
                     <div class='mm'></div>
                     </div>
                     <div class='cm'></div>
-                    </div>
+                  </div>
                   </div>
                 </v-card>
               </v-flex>
@@ -174,8 +174,7 @@
               <v-card>
                 <v-card-title class="pa-1 justify-center">
                   <div class=" text-xs-center title white--text">
-                    <span>Evolution Pression</span>
-                    <h3 v-if='alertPress' class="orange--text">Prévision: {{ alertPress }}</h3>
+                    <span>Evolution Pression: {{ alertPress }}</span>
                   </div>
                 </v-card-title>
                 <v-card-text class="pa-0">
@@ -191,7 +190,6 @@
 
 
   </v-container>
-   </div>
   </div>
 </template>
 <script>
@@ -275,7 +273,8 @@ export default {
         label: { normal: { show: true, position: "top" } }
       }
       return {
-        pressurePercent: '60%',
+        pression: 0,
+        pressurePercent: '0%',
         tempData: {
           columns: ['type', 'value'],
           rows: [
@@ -320,6 +319,7 @@ export default {
       }
       that.chartData.rows[that.chartData.rows.length-1].timing='H'
       that.pressurePercent = ((Number(that.chartData.rows[that.chartData.rows.length-1].pressure)-950)/(1050-950))*100 + '%'
+      that.pression = that.chartData.rows[that.chartData.rows.length-1].pressure
     }
   },
  computed: {
@@ -331,7 +331,6 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
-
 .bgImage
   background: url('../assets/sunnysky.jpg')
   height: 100%
@@ -343,17 +342,8 @@ export default {
     margin-left: auto;
     margin-right: auto;
 .theme--light.v-card 
-    opacity : 0.6
+    opacity : 0.8
     background-color: black
-
-.bgGradient {
-  height: 100%
-  background: linear-gradient(
-    to top,
-    black, 
-    transparent
-  );
-}
 
 .barometer {
   margin-left: 50px;
@@ -416,6 +406,14 @@ export default {
   }
 }
 
+.pression {
+  position: absolute;
+  right: 40px;
+  top: 50px;
+  color: orange;
+  width: 120px;
+  text-align : center;
+}
 .ruler {
  position: relative;
  top: -290px;
