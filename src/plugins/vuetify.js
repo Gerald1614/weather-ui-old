@@ -8,8 +8,10 @@ import {
   VBtn,
   VCard,
   VIcon,
+  VImg,
   VGrid,
   VToolbar,
+  VProgressCircular,
   transitions
 } from 'vuetify'
 import 'vuetify/src/stylus/app.styl'
@@ -23,8 +25,10 @@ Vue.use(Vuetify, {
     VBtn,
     VCard,
     VIcon,
+    VImg,
     VGrid,
     VToolbar,
+    VProgressCircular,
     transitions
   },
   theme: {

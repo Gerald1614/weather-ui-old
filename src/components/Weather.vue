@@ -7,16 +7,33 @@
           <v-card-title class="pa-1 justify-center">
             <div class="title white--text">Température intérieure</div>
           </v-card-title>
-          <v-card-text class="pa-0">
+          <v-card-text class="pt-1">
             <ve-gauge :data="tempData" :settings="tempSettings" height="278px"></ve-gauge>
           </v-card-text>
         </v-card>
       </v-flex>
-       <v-flex xs9 class="pt-1">
-        <v-card>
-            <v-flex class="pa-0">
-            <img class="imageForecast" height="305px" :src="getWeatherImage">
+       <v-flex xs9 class="pt-1 align-center">
+        <v-card class="pt-1">
+          <v-layout row wrap class="pt-1 align-center">
+            <v-flex xs3 class="pa-2 text-xs-center">
+              <div class="white--text" v-if="loading">
+                   <v-progress-circular
+                    indeterminate
+                    color="red"
+                    >
+                    </v-progress-circular>
+              </div>
+              <v-flex v-if="currentWeather" class=" white--text"  justify-center>
+                <div class="title white--text pb-4">Température Extérieure</div>
+                <h2 class=" display-1 orange--text">{{ currentWeather.main.temp }} °C</h2>
+                <v-img :src="cloudIcon" width="50%"></v-img>
+              </v-flex>
+
             </v-flex>
+             <v-flex xs9 class="pa-0">
+              <img class="imageForecast" height="320px" :src="getWeatherImage">
+            </v-flex>
+          </v-layout>
         </v-card>
        </v-flex>
       </v-layout>
@@ -34,9 +51,10 @@
             </v-card>
             </v-flex>
             <v-flex xs6 class="pt-1">
-                <v-card class="pa-2">
-                  <div class="subheading pression">Pression Atmospherique : {{ pression }} hPa</div>
-                  <div style="height: 272px">
+              <v-card class="pa-2">
+                <v-layout align-center justify-center row wrap>
+                  <v-flex xs6 class="pa-0">
+                    <div style="height: 272px">
                     <div class="barometer">
                       <span class="glass">
                           <strong class="marks" style="bottom: 10%">Tempête</strong>
@@ -167,14 +185,20 @@
                     <div class='cm'></div>
                   </div>
                   </div>
-                </v-card>
-              </v-flex>
+                  </v-flex>
+                    <v-flex xs6 class="pa-0">
+                    <div class="title white--text pb-4">Pression Atmosphérique:</div>
+                    <div class="title orange--text">{{ pression }} hPa</div>
+                  </v-flex>
+                </v-layout>
+              </v-card>
+            </v-flex>
           </v-layout>
             <v-flex xs12 class="pa-0">
               <v-card>
                 <v-card-title class="pa-1 justify-center">
                   <div class=" text-xs-center title white--text">
-                    <span>Evolution Pression: {{ alertPress }}</span>
+                    <span>Prévision: {{ alertPress }}</span>
                   </div>
                 </v-card-title>
                 <v-card-text class="pa-0">
@@ -184,7 +208,7 @@
             </v-flex>
         </v-flex> 
         <v-flex xs6 class="pt-1">
-
+          <v-img contain v-if="pictureDay" :src="pictureDay" height="100%"></v-img>
         </v-flex>
     </v-layout>
 
@@ -274,6 +298,10 @@ export default {
       }
       return {
         pression: 0,
+        currentWeather: null,
+        loading: true,
+        cloudIcon: null,
+        pictureDay: null,
         pressurePercent: '0%',
         tempData: {
           columns: ['type', 'value'],
@@ -299,6 +327,11 @@ export default {
   mounted () {
     let minCount =0
     let that = this
+
+    that.fetchCurrentWeather()
+    setInterval(function() {
+      that.fetchCurrentWeather()
+    }, 1800000);
     this.$options.sockets.sensorData = (data) => {
       console.log(data)
       this.capteurData = JSON.parse(data)
@@ -307,6 +340,7 @@ export default {
       this.chartSettings.min = [Number(this.capteurData.PressureMin.pressure)-0.2]
       this.chartSettings.max = [Number(this.capteurData.PressureMax.pressure)+0.2]
       this.alertPress = this.capteurData.alertPress
+      that.pictureDay = 'http://192.168.2.25:3000/pictureDay/' + this.capteurData.pictureDay
       if (this.capteurData.data.length == that.chartData.rows.length) {
         this.capteurData.data.reverse().forEach( function(pressure, index) {
           that.chartData.rows[index].pressure = pressure.pressure_hPa
@@ -322,21 +356,49 @@ export default {
       that.pression = that.chartData.rows[that.chartData.rows.length-1].pressure
     }
   },
+  methods: {
+    fetchCurrentWeather () {
+      let that = this
+      that.loading =true
+      fetch('http://api.openweathermap.org/data/2.5/weather?q=montreal,ca&appid=780791feddc51fd9b16e05c3cd855c5a&units=metric')
+        .then(
+        function(response) {
+          that.loading = false
+          if (response.status !== 200) {
+            console.log('Looks like there was a problem. Status Code: ' +
+              response.status);
+            return;
+          }
+            response.json().then(function(data) {
+              console.log(data)
+                that.currentWeather = data
+                that.cloudIcon = 'http://openweathermap.org/img/w/' + data.weather[0].icon + '.png'
+            });
+          }
+        )
+        .catch(function(err) {
+          console.log('Fetch Error :-S', err);
+        });
+    }
+  },
  computed: {
    getWeatherImage: function() {
      let imgurl =  'https://www.theweather.net/wimages/foto6befdfa26653b3c86f01b91164e670e5.png' + '?' + Math.random()
      return imgurl
    }
- }
+ },
 }
 </script>
 <style lang="stylus" scoped>
-.bgImage
+.v-image
+    margin-left: auto;
+    margin-right: auto;
+.bgImage {
   background: url('../assets/sunnysky.jpg')
   height: 100%
   background-size:  cover
   background-repeat : no-repeat
-
+}
 .imageForecast
     display: block;
     margin-left: auto;
@@ -406,20 +468,12 @@ export default {
   }
 }
 
-.pression {
-  position: absolute;
-  right: 40px;
-  top: 50px;
-  color: orange;
-  width: 120px;
-  text-align : center;
-}
 .ruler {
  position: relative;
  top: -290px;
- left:-40px;
- width: 10%;
- margin: 4px auto;
+ left: 120px;
+ width: 40px;
+ margin: 4px 8px;
  height: 220px;
  color: white;
 }
