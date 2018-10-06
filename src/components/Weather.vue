@@ -37,7 +37,7 @@
         </v-card>
        </v-flex>
       </v-layout>
-      <v-layout row wrap class="px-1">
+      <v-layout row wrap align-content-space-between class="px-1">
         <v-flex xs6 class="pt-1">
           <v-layout row wrap>
             <v-flex xs6 class="pt-1">
@@ -51,10 +51,10 @@
             </v-card>
             </v-flex>
             <v-flex xs6 class="pt-1">
-              <v-card class="pa-2">
+              <v-card class="pt-3 px-2">
                 <v-layout align-center justify-center row wrap>
                   <v-flex xs6 class="pa-0">
-                    <div style="height: 272px">
+                    <div style="height: 276px">
                     <div class="barometer">
                       <span class="glass">
                           <strong class="marks" style="bottom: 10%">Tempête</strong>
@@ -208,7 +208,11 @@
             </v-flex>
         </v-flex> 
         <v-flex xs6 class="pt-1">
-          <v-img contain v-if="pictureDay" :src="pictureDay" height="100%"></v-img>
+          <v-card v-if="pictureDay" class="pa-2">
+            <v-card-media>
+          <v-img contain  :src="pictureDay" height="100%"></v-img>
+          </v-card-media>
+          </v-card>
         </v-flex>
     </v-layout>
 
