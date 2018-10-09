@@ -37,7 +37,7 @@
         </v-card>
        </v-flex>
       </v-layout>
-      <v-layout row wrap align-content-space-between class="px-1">
+      <v-layout row wrap align-content-space-between  align-center class="px-1">
         <v-flex xs6 class="pt-1">
           <v-layout row wrap>
             <v-flex xs6 class="pt-1">
@@ -201,18 +201,14 @@
                     <span>Prévision: {{ alertPress }}</span>
                   </div>
                 </v-card-title>
-                <v-card-text class="pa-0">
+                <v-card-text class="ma-0">
                   <ve-histogram :data="chartData" :settings="chartSettings" :legend-visible=false height="278px" ></ve-histogram>
                 </v-card-text>
               </v-card>
             </v-flex>
         </v-flex> 
-        <v-flex xs6 class="pt-1">
-          <v-card v-if="pictureDay" class="pa-2 cardImage">
-            <v-card-media>
-          <v-img contain  :src="pictureDay" height="100%"></v-img>
-          </v-card-media>
-          </v-card>
+        <v-flex xs6 class="pa-1" max-height="565px">
+          <v-img class="pa-1" v-if="pictureDay" contain  :src="pictureDay" style="border:5px solid white"></v-img>
         </v-flex>
     </v-layout>
 
@@ -397,7 +393,7 @@ export default {
 .v-image
     margin-left: auto;
     margin-right: auto;
-    image-orientation: from-image
+
   
 .bgImage {
   background: url('../assets/sunnysky.jpg')
@@ -413,10 +409,6 @@ export default {
 .theme--light.v-card 
     opacity : 0.8
     background-color: black
-
-.cardImage
-  opacity :1 !important 
-  background-color: white !important
 
 .barometer {
   margin-left: 50px;
