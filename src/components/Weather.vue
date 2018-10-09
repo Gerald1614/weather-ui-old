@@ -208,7 +208,7 @@
             </v-flex>
         </v-flex> 
         <v-flex xs6 class="pt-1">
-          <v-card v-if="pictureDay" class="pa-2">
+          <v-card v-if="pictureDay" class="pa-2 cardImage">
             <v-card-media>
           <v-img contain  :src="pictureDay" height="100%"></v-img>
           </v-card-media>
@@ -397,6 +397,8 @@ export default {
 .v-image
     margin-left: auto;
     margin-right: auto;
+    image-orientation: from-image
+  
 .bgImage {
   background: url('../assets/sunnysky.jpg')
   height: 100%
@@ -407,9 +409,14 @@ export default {
     display: block;
     margin-left: auto;
     margin-right: auto;
+
 .theme--light.v-card 
     opacity : 0.8
     background-color: black
+
+.cardImage
+  opacity :1 !important 
+  background-color: white !important
 
 .barometer {
   margin-left: 50px;
