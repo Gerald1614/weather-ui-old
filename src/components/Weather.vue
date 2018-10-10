@@ -37,7 +37,7 @@
         </v-card>
        </v-flex>
       </v-layout>
-      <v-layout row wrap align-content-space-between  align-center class="px-1">
+      <v-layout row wrap align-content-space-between fill-height class="px-1">
         <v-flex xs6 class="pt-1">
           <v-layout row wrap>
             <v-flex xs6 class="pt-1">
@@ -194,7 +194,7 @@
               </v-card>
             </v-flex>
           </v-layout>
-            <v-flex xs12 class="pa-0">
+            <v-flex xs12  class="pa-0">
               <v-card>
                 <v-card-title class="pa-1 justify-center">
                   <div class=" text-xs-center title white--text">
@@ -207,8 +207,8 @@
               </v-card>
             </v-flex>
         </v-flex> 
-        <v-flex xs6 class="pa-1" max-height="565px">
-          <v-img class="pa-1" v-if="pictureDay" contain  :src="pictureDay" style="border:5px solid white"></v-img>
+        <v-flex xs6 class="pa-1">
+          <v-img v-if="pictureDay" contain :src="pictureDay" class="carousel"></v-img>
         </v-flex>
     </v-layout>
 
@@ -340,7 +340,7 @@ export default {
       this.chartSettings.min = [Number(this.capteurData.PressureMin.pressure)-0.2]
       this.chartSettings.max = [Number(this.capteurData.PressureMax.pressure)+0.2]
       this.alertPress = this.capteurData.alertPress
-      that.pictureDay = 'http://192.168.2.25:3000/pictureDay/' + this.capteurData.pictureDay
+      that.pictureDay = `${process.env.VUE_APP_SERVER_ADDRESS}/pictureDay/${this.capteurData.pictureDay}`
       if (this.capteurData.data.length == that.chartData.rows.length) {
         this.capteurData.data.reverse().forEach( function(pressure, index) {
           that.chartData.rows[index].pressure = pressure.pressure_hPa
@@ -360,7 +360,7 @@ export default {
     fetchCurrentWeather () {
       let that = this
       that.loading =true
-      fetch('http://api.openweathermap.org/data/2.5/weather?q=montreal,ca&appid=780791feddc51fd9b16e05c3cd855c5a&units=metric')
+      fetch(`http://api.openweathermap.org/data/2.5/weather?q=montreal,ca&appid=${process.env.VUE_APP_OWM_KEY}&units=metric`)
         .then(
         function(response) {
           that.loading = false
@@ -394,6 +394,9 @@ export default {
     margin-left: auto;
     margin-right: auto;
 
+.carousel
+  border:5px solid white;
+  max-height: 630px;
   
 .bgImage {
   background: url('../assets/sunnysky.jpg')
