@@ -31,7 +31,7 @@ The idea here was to bring modularity not only in the way software is built ( so
 
 This project is my first RPI project but I wanted to consolidate in a single project information I only found in many disparate sources of information. there is nothing fancy here but it exposes and integrate the result of many interesting concepts and technologies combined
 
-#the UI#
+#the UI (there is an updated version see hereunder#
  Basic VueJs application with only one page (this is the first iteration of the project and I am planning to use other pages). The application integrates various sources of information:
 
  * Sensor's data received through socket.io by the back end
@@ -61,6 +61,7 @@ then you need to deploy the content of the dist folder to your server
 
 Here are the links to the other applications that are part of the project:
 
+* the UI version 2: [bitbucket](https://bitbucket.org/gegeraptor/weather-ui-v2/src)
 * the UI : [bitbucket](https://bitbucket.org/gegeraptor/weather-ui/src/master/)
 * the client node.js app running on the RPI zero : [bitbucket](https://bitbucket.org/gegeraptor/weather-client/src/master/)
 * the backend : [bitbucket](https://bitbucket.org/gegeraptor/weather-server/src/master/)
