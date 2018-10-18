@@ -42,7 +42,7 @@ This project is my first RPI project but I wanted to consolidate in a single pro
 What was new to me was working with a few new libraries to present data in nice visuals. I decided to try v-charts which enabled me to get access to gauge supported by the e-charts libraries (not very well documented).
 For the barometer, I decided to use pure css code. 
 I also leveraged Vuetify which is a very nice framework to style the application.
-
+ATTENTION : this UI is nto working with the lastest backend releases as i decided fro the new UI to fecth the API data in NOdeJS and send it to the front end with socket.io. 
 
 
 ## Installation
