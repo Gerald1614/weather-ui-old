@@ -31,7 +31,7 @@ The idea here was to bring modularity not only in the way software is built ( so
 
 This project is my first RPI project but I wanted to consolidate in a single project information I only found in many disparate sources of information. there is nothing fancy here but it exposes and integrate the result of many interesting concepts and technologies combined
 
-#the UI (there is an updated version see hereunder#
+#the UI (new version available - see hereunder)#
  Basic VueJs application with only one page (this is the first iteration of the project and I am planning to use other pages). The application integrates various sources of information:
 
  * Sensor's data received through socket.io by the back end
@@ -42,7 +42,8 @@ This project is my first RPI project but I wanted to consolidate in a single pro
 What was new to me was working with a few new libraries to present data in nice visuals. I decided to try v-charts which enabled me to get access to gauge supported by the e-charts libraries (not very well documented).
 For the barometer, I decided to use pure css code. 
 I also leveraged Vuetify which is a very nice framework to style the application.
-ATTENTION : this UI is nto working with the lastest backend releases as i decided fro the new UI to fecth the API data in NOdeJS and send it to the front end with socket.io. 
+
+ATTENTION : this UI is not working with the lastest backend releases as i decided for the new UI to fetch the API data in NodeJS (Instead of fetching from the UI). So if you want to make this one run, you need to pull the version of the backend that is previous to the one named "switched API fetch from UI to backend"
 
 
 ## Installation
